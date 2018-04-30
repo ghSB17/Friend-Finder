@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
+    <title>Friend Finder</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <div class="card">
+                <div class="card-header h1 ml-10">
+                    <i class="fas fa-facebook-square"></i>
+                    Friend Finder
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container h4 ml-12">
+        Name:
+        <input type="text" name="fname" id="idName" required>
+
+        <br>
+        <br>
+        <br>
+    </div>
+    <div class="container h4 ml-10">
+        <p>Walking in the park relaxes your body and mind</p>
+        <select id="idQuestion1">
+            <option value>Select an Option</option>
+            <option value="5">5(strongly disagree!)</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1(strongly agree!)</option>
+        </select>
+        <br>
+        <br>
+        <p>Walking to the park relaxes your body and mind</p>
+        <select id="idQuestion2">
+            <option value>Select an Option</option>
+            <option value="5">5(strongly disagree!)</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1(strongly agree!)</option>
+        </select>
+        <br>
+        <br>
+        <p>Walking in the museum relaxes your body and mind</p>
+        <select id="idQuestion3">
+            <option value>Select an Option</option>
+            <option value="5">5(strongly disagree!)</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1(strongly agree!)</option>
+        </select>
+        <br>
+        <br>
+        <p>Walking in the mall relaxes your body and mind</p>
+        <select id="idQuestion4">
+            <option value>Select an Option</option>
+            <option value="5">5(strongly disagree!)</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1(strongly agree!)</option>
+        </select>
+        <br>
+        <br>
+        <p>Walking on the treadmill relaxes your body and mind</p>
+        <select id="idQuestion5">
+            <option value>Select an Option</option>
+            <option value="5">5(strongly disagree!)</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1(strongly agree!)</option>
+        </select>
+        <br>
+        <br>
+
+        <button class="btn btn-primary btn-lg" id="btnSubmit" type="submit">Submit</button>
+    </div>
+
+    <script type="text/javascript">
+        // To Post data in friends.js File
+        var name = '';
+        var questionResponse1 = '';
+        var questionResponse2 = '';
+        var questionResponse3 = '';
+        var questionResponse4 = '';
+        var questionResponse5 = '';
+
+        function validateForm() {
+            
+            if (name !== '', questionResponse1 !== '', questionResponse2 !== '', questionResponse3 !== '',
+                questionResponse4 !== '', questionResponse5 != '')
+                return true;
+            else
+                return false;
+        }
+        $("#btnSubmit").on("click", function (event) {
+            event.preventDefault();
+            name = $("#idName").val().trim() || '';
+            questionResponse1 = $("#idQuestion1").val() || '';
+            questionResponse2 = $("#idQuestion2").val() || '';
+            questionResponse3 = $("#idQuestion3").val() || '';
+            questionResponse4 = $("#idQuestion4").val() || '';
+            questionResponse5 = $("#idQuestion5").val() || '';
+            if (validateForm()) {
+                var newFriend = {
+                    name: name,
+                    questionResponse1: questionResponse1,
+                    questionResponse2: questionResponse2,
+                    questionResponse3: questionResponse3,
+                    questionResponse4: questionResponse4,
+                    questionResponse5: questionResponse5,
+                }
+
+                $.post("/api/friends/new", newFriend)
+                    .then(function (data) {
+                        alert(JSON.stringify(data, null, 2));
+                    });
+            } else
+                alert("Please respond to all the questions to find your Best Friend(s)");
+        });
+    </script>
+</body>
+
+</html>
